@@ -79,7 +79,7 @@
         function getNextPortugalDay() {
             const now = new Date();
             const year = now.getFullYear();
-            const portugalDay = new Date(year, 5, 10); // 5 é Junho (0 é Janeiro)
+            const portugalDay = new Date(year, 1, 14); // 5 é Junho (0 é Janeiro)
 
             // Se já passou o Dia de Portugal deste ano, usamos o próximo ano
             if (now > portugalDay) {
@@ -93,7 +93,7 @@
         function getNextValentinesDay() {
             const now = new Date();
             const year = now.getFullYear();
-            const valentinesDay = new Date(year, 5, 12); // 5 é Junho (0 é Janeiro)
+            const valentinesDay = new Date(year, 5, 10); // 5 é Junho (0 é Janeiro)
 
             // Se já passou o Dia dos Namorados deste ano, usamos o próximo ano
             if (now > valentinesDay) {
