@@ -47,6 +47,38 @@
             margin-top: 20px;
             max-width: 500px;
         }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #D81B60;
+            border-radius: 10px;
+            background-color: #FFF;
+        }
+        .question {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        .options button {
+            background-color: #F48FB1;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            color: #FFF;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #D81B60;
+        }
+        .result {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    
     </style>
 </head>
 <body>
@@ -175,6 +207,82 @@
         atualizarContador(); // Chama imediatamente para não esperar 1 segundo
     </script>
 
+    <div class="quiz-container">
+        <h4>Quiz do Casal ❤️</h4>
+        <div id="quiz"></div>
+        <button onclick="checkAnswer()">Verificar Resposta</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Perguntas e respostas
+        const quizData = [
+            {
+                question: "Qual foi o nosso primeiro encontro?",
+                options: ["Cinema", "Restaurante", "Parque", "Praia"],
+                correct: "Cinema"
+            },
+            {
+                question: "Qual é a nossa data de aniversário?",
+                options: ["10 de Junho", "12 de Abril", "25 de Dezembro", "14 de Fevereiro"],
+                correct: "10 de Junho"
+            },
+            {
+                question: "Qual é a nossa comida favorita juntos?",
+                options: ["Pizza", "Sushi", "Churrasco", "Sorvete"],
+                correct: "Pizza"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        // Exibir a primeira pergunta
+        function loadQuestion() {
+            const questionElement = document.getElementById("quiz");
+            questionElement.innerHTML = `
+                <div class="question">${quizData[currentQuestion].question}</div>
+                <div class="options">
+                    ${quizData[currentQuestion].options.map(option => `
+                        <button onclick="selectAnswer('${option}')">${option}</button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        let selectedAnswer = "";
+
+        // Guardar a resposta selecionada
+        function selectAnswer(answer) {
+            selectedAnswer = answer;
+        }
+
+        // Verificar a resposta
+        function checkAnswer() {
+            if (selectedAnswer === quizData[currentQuestion].correct) {
+                score++;
+                alert("Correto! ❤️");
+            } else {
+                alert("Ops, resposta errada! 😅");
+            }
+
+            // Próxima pergunta
+            currentQuestion++;
+            selectedAnswer = ""; // Limpar a resposta selecionada
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                // Mostrar o resultado final
+                document.getElementById("quiz").innerHTML = "";
+                document.getElementById("result").innerHTML = `Você acertou ${score} de ${quizData.length} perguntas!`;
+            }
+        }
+
+        // Carregar a primeira pergunta ao abrir a página
+        loadQuestion();
+    </script>
+    
 
 </body>
 </html>
