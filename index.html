@@ -71,7 +71,7 @@
             const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
 
             document.getElementById("contador").innerHTML =
-                ` <p>Together since 2021</p>${dias} days, ${horas} hours, ${minutos} minutes e ${segundos} seconds`;
+                ` <p>Together since 2021</p>${dias} days, ${horas} hours, ${minutos} minutes e ${segundos} seconds<hr>`;
         }
 
         setInterval(atualizarContador, 1000); // Atualiza a cada segundo
