@@ -22,7 +22,10 @@
             margin: 20px;
             max-width: 500px;
         }
-        
+        h3 {
+            font-size: 24px; /* Ajuste o tamanho do título aqui */
+            margin: 20px 0;
+        }
         h1 {
             font-size: 3em;
             margin-bottom: 10px;
@@ -65,16 +68,32 @@
 
         <img id="foto" src="WhatsApp Image 2024-11-03 at 11.42.58.jpeg" alt="Foto do casal">
 
-        <h2>Para o dia dos Namorados</h2>
-    <div class="countdown" id="countdown"></div>
-        
+        <h2>Contagem Regressiva para o Dia de Portugal</h1>
+    <div class="countdown" id="countdown-portugal"></div>
+
+    <h2>Contagem Regressiva para o Dia dos Namorados</h1>
+    <div class="countdown" id="countdown-valentines"></div>
 
     <script>
-        // Define a data do próximo Dia dos Namorados (14 de Fevereiro)
+        // Define a data do próximo Dia de Portugal (10 de Junho)
+        function getNextPortugalDay() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const portugalDay = new Date(year, 5, 10); // 5 é Junho (0 é Janeiro)
+
+            // Se já passou o Dia de Portugal deste ano, usamos o próximo ano
+            if (now > portugalDay) {
+                portugalDay.setFullYear(year + 1);
+            }
+
+            return portugalDay;
+        }
+
+        // Define a data do próximo Dia dos Namorados (12 de Junho)
         function getNextValentinesDay() {
             const now = new Date();
             const year = now.getFullYear();
-            const valentinesDay = new Date(year, 1, 14); // 1 é Fevereiro (0 é Janeiro)
+            const valentinesDay = new Date(year, 5, 12); // 5 é Junho (0 é Janeiro)
 
             // Se já passou o Dia dos Namorados deste ano, usamos o próximo ano
             if (now > valentinesDay) {
@@ -85,18 +104,28 @@
         }
 
         function updateCountdown() {
-            const countdownElement = document.getElementById("countdown");
-            const nextValentinesDay = getNextValentinesDay();
+            const countdownPortugalElement = document.getElementById("countdown-portugal");
+            const nextPortugalDay = getNextPortugalDay();
             const now = new Date();
-            const difference = nextValentinesDay - now;
+            const differencePortugal = nextPortugalDay - now;
 
-            // Calcula dias, horas, minutos e segundos
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            const daysPortugal = Math.floor(differencePortugal / (1000 * 60 * 60 * 24));
+            const hoursPortugal = Math.floor((differencePortugal % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutesPortugal = Math.floor((differencePortugal % (1000 * 60 * 60)) / (1000 * 60));
+            const secondsPortugal = Math.floor((differencePortugal % (1000 * 60)) / 1000);
 
-            countdownElement.innerHTML = `${days} dias, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
+            countdownPortugalElement.innerHTML = `${daysPortugal} dias, ${hoursPortugal} horas, ${minutesPortugal} minutos, ${secondsPortugal} segundos`;
+
+            const countdownValentinesElement = document.getElementById("countdown-valentines");
+            const nextValentinesDay = getNextValentinesDay();
+            const differenceValentines = nextValentinesDay - now;
+
+            const daysValentines = Math.floor(differenceValentines / (1000 * 60 * 60 * 24));
+            const hoursValentines = Math.floor((differenceValentines % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutesValentines = Math.floor((differenceValentines % (1000 * 60 * 60)) / (1000 * 60));
+            const secondsValentines = Math.floor((differenceValentines % (1000 * 60)) / 1000);
+
+            countdownValentinesElement.innerHTML = `${daysValentines} dias, ${hoursValentines} horas, ${minutesValentines} minutos, ${secondsValentines} segundos`;
         }
 
         // Atualiza a contagem regressiva a cada segundo
