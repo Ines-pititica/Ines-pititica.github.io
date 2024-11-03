@@ -22,6 +22,10 @@
             margin: 20px;
             max-width: 500px;
         }
+        h3 {
+            font-size: 24px; /* Ajuste o tamanho do título aqui */
+            margin: 20px 0;
+        }
         
         h1 {
             font-size: 3em;
@@ -102,7 +106,44 @@
         setInterval(updateCountdown, 1000);
         updateCountdown(); // Chama uma vez para mostrar imediatamente
     </script>
-        
+
+        <h3>Contagem Regressiva para o Dia dos Namorados</h3>
+    <div class="countdown" id="countdown"></div>
+
+    <script>
+        // Define a data do próximo Dia dos Namorados (10 de Junho)
+        function getNextValentinesDay() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const valentinesDay = new Date(year, 5, 10); // 5 é Junho (0 é Janeiro)
+
+            // Se já passou o Dia dos Namorados deste ano, usamos o próximo ano
+            if (now > valentinesDay) {
+                valentinesDay.setFullYear(year + 1);
+            }
+
+            return valentinesDay;
+        }
+
+        function updateCountdown() {
+            const countdownElement = document.getElementById("countdown");
+            const nextValentinesDay = getNextValentinesDay();
+            const now = new Date();
+            const difference = nextValentinesDay - now;
+
+            // Calcula dias, horas, minutos e segundos
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${days} dias, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
+        }
+
+        // Atualiza a contagem regressiva a cada segundo
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Chama uma vez para mostrar imediatamente
+    </script>
         
     </div>
 
