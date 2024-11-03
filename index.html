@@ -70,7 +70,12 @@
             const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
 
             document.getElementById("contador").innerHTML =
-                `Estamos juntos há ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+                <div id="mensagem">
+       <p>Cada segundo ao teu lado é especial.</p>
+       <p>Este é o relógio do nosso amor.</p>
+       <p>Amo-te para sempre!</p>
+    </div>
+                `Tempo juntos: ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
         }
 
         setInterval(atualizarContador, 1000); // Atualiza a cada segundo
