@@ -369,7 +369,9 @@
                 </div>
             `;
         });
-
+const totalPairs = images.length;
+let matchedPairs = 0;
+        
    // Lógica do jogo
         let hasFlippedCard = false;
         let lockBoard = false;
@@ -394,10 +396,20 @@
         }
 
         function checkForMatch() {
-            const isMatch = firstCard.dataset.image === secondCard.dataset.image;
+    const isMatch = firstCard.dataset.image === secondCard.dataset.image;
 
-            isMatch ? disableCards() : unflipCards();
+    if (isMatch) {
+        disableCards();
+        matchedPairs++; // Incrementa o contador quando um par é encontrado
+
+        // Verifica se todos os pares foram encontrados
+        if (matchedPairs === totalPairs) {
+            showWinMessage();
         }
+    } else {
+        unflipCards();
+    }
+}
 
         function showWinMessage() {
     const winMessage = document.getElementById('winMessage');
