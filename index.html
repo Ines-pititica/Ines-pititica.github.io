@@ -370,55 +370,36 @@
             `;
         });
 
-        // Número total de pares e contador de pares combinados
-// Variáveis globais
-let attempts = 0; // Contador de tentativas
-let matchedPairs = 0; // Contador de pares encontrados
-const totalPairs = 6; // Número total de pares no jogo
-let firstCard, secondCard; // Variáveis para armazenar as cartas clicadas
-let lockBoard = false; // Bloqueia o tabuleiro enquanto duas cartas são comparadas
+   // Lógica do jogo
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let firstCard, secondCard;
 
-// Função que lida com o clique nas cartas
-function flipCard(card) {
-    if (lockBoard || card === firstCard || card.classList.contains('matched')) return;
+        function flipCard() {
+            if (lockBoard) return;
+            if (this === firstCard) return;
 
-    card.classList.add('flipped');
+            this.classList.add('flip');
 
-    if (!firstCard) {
-        // Primeira carta clicada
-        firstCard = card;
-    } else {
-        // Segunda carta clicada
-        secondCard = card;
-        attempts++; // Incrementa o contador de tentativas
-        checkForMatch(); // Verifica se as cartas formam um par
-    }
-}
-        function checkForMatch() {
-    lockBoard = true; // Bloqueia o tabuleiro temporariamente
+            if (!hasFlippedCard) {
+                // Primeira carta virada
+                hasFlippedCard = true;
+                firstCard = this;
+                return;
+            }
 
-    if (firstCard.dataset.name === secondCard.dataset.name) {
-        // Cartas combinam, mantém elas viradas e marca como "matched"
-        firstCard.classList.add('matched');
-        secondCard.classList.add('matched');
-        matchedPairs++; // Incrementa o contador de pares encontrados
-        resetBoard();
-
-        // Verifica se o jogo foi concluído
-        if (matchedPairs === totalPairs) {
-            showWinMessage(); // Exibe a mensagem de vitória
+            // Segunda carta virada
+            secondCard = this;
+            checkForMatch();
         }
-    } else {
-        // Se não forem um par, desvira as cartas após uma pequena pausa
-        setTimeout(() => {
-            firstCard.classList.remove('flipped');
-            secondCard.classList.remove('flipped');
-            resetBoard();
-        }, 1000);
-    }
-}
 
-function showWinMessage() {
+        function checkForMatch() {
+            const isMatch = firstCard.dataset.image === secondCard.dataset.image;
+
+            isMatch ? disableCards() : unflipCards();
+        }
+
+        function showWinMessage() {
     const winMessage = document.getElementById('winMessage');
     winMessage.style.display = 'flex'; // Exibe a mensagem de vitória
 
@@ -430,7 +411,7 @@ function showWinMessage() {
     }, 5000);
 
 }
-
+        
         function disableCards() {
             firstCard.removeEventListener('click', flipCard);
             secondCard.removeEventListener('click', flipCard);
@@ -463,3 +444,15 @@ function showWinMessage() {
 </body>
 </html>
  
+function showWinMessage() {
+    const winMessage = document.getElementById('winMessage');
+    winMessage.style.display = 'flex'; // Exibe a mensagem de vitória
+
+    winMessage.innerHTML = `Parabéns, meu amor! 💖<br>Tentativas feitas: ${attempts}`;
+    
+    // Oculta a mensagem após 5 segundos (5000 milissegundos)
+    setTimeout(() => {
+        winMessage.style.display = 'none';
+    }, 5000);
+
+}
