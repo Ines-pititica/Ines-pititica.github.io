@@ -433,7 +433,12 @@ let matchedPairs = 0;
 
 function showWinMessage() {
     const winMessage = document.getElementById('winMessage');
-    winMessage.style.display = 'block'; // Exibe a mensagem de vitória
+    winMessage.style.display = 'flex'; // Exibe a mensagem de vitória
+
+    // Oculta a mensagem após 5 segundos (5000 milissegundos)
+    setTimeout(() => {
+        winMessage.style.display = 'none';
+    }, 5000);
 }
 
         function disableCards() {
