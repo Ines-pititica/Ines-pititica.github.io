@@ -340,7 +340,7 @@
     <!-- Mensagem para quando todos os pares forem encontrados -->
 <div id="winMessage" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.8); color: #FFF; font-size: 24px; text-align: center; padding: 20px; z-index: 10;">
     Parabéns, meu amor! 💖
-    </div>
+</div>
 
     <script>
         // Lista de imagens do casal
@@ -369,19 +369,35 @@
                 </div>
             `;
         });
+
+        // Número total de pares e contador de pares combinados
+const totalPairs = images.length;
+let matchedPairs = 0;
+
+        // Lógica do jogo
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let firstCard, secondCard;
         let attempts = 0; // Contador de tentativas
-let matchedPairs = 0; // Contador de pares encontrados
-const totalPairs = 8; // Número total de pares no jogo
 
-// Função que lida com o clique nas cartas
-function flipCard() {
-    // Incrementa o contador de tentativas
-    attempts++;
+        function flipCard() {
+            attempts++;
+            if (lockBoard) return;
+            if (this === firstCard) return;
 
-    // Lógica para virar a carta, verificar pares, etc.
-    // ...
-}
+            this.classList.add('flip');
 
+            if (!hasFlippedCard) {
+                // Primeira carta virada
+                hasFlippedCard = true;
+                firstCard = this;
+                return;
+            }
+
+            // Segunda carta virada
+            secondCard = this;
+            checkForMatch();
+        }
 
         function checkForMatch() {
     const isMatch = firstCard.dataset.image === secondCard.dataset.image;
@@ -399,7 +415,7 @@ function flipCard() {
     }
 }
 
-        function showWinMessage() {
+function showWinMessage() {
     const winMessage = document.getElementById('winMessage');
     winMessage.style.display = 'flex'; // Exibe a mensagem de vitória
 
@@ -411,7 +427,7 @@ function flipCard() {
     }, 5000);
 
 }
-        
+
         function disableCards() {
             firstCard.removeEventListener('click', flipCard);
             secondCard.removeEventListener('click', flipCard);
