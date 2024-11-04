@@ -135,21 +135,6 @@
     </style>
 </head>
 <body>
-    <div class="section">
-    <h2>Lista de Desejos</h2>
-    <input type="text" id="wishInput" placeholder="Adicionar novo desejo...">
-    <button onclick="addWish()">Adicionar</button>
-    <ul id="wishList"></ul>
-</div>
-
-<div class="section">
-    <h2>Diário</h2>
-    <textarea id="diaryEntry" rows="5" placeholder="Escrever uma nova entrada..."></textarea>
-    <button onclick="addDiaryEntry()">Salvar Entrada</button>
-    <div id="diaryList"></div>
-</div>
-
-<script src="script.js"></script>
     
    <audio id="background-music" loop>
         <source src="Christina-Perri-A-Thousand-Years.ogg" type="audio/mpeg">
@@ -275,6 +260,22 @@
         setInterval(atualizarContador, 1000); // Atualiza a cada segundo
         atualizarContador(); // Chama imediatamente para não esperar 1 segundo
     </script>
+
+    <div class="section">
+    <h2>Lista de Desejos</h2>
+    <input type="text" id="wishInput" placeholder="Adicionar novo desejo...">
+    <button onclick="addWish()">Adicionar</button>
+    <ul id="wishList"></ul>
+</div>
+
+<div class="section">
+    <h2>Diário</h2>
+    <textarea id="diaryEntry" rows="5" placeholder="Escrever uma nova entrada..."></textarea>
+    <button onclick="addDiaryEntry()">Salvar Entrada</button>
+    <div id="diaryList"></div>
+</div>
+
+<script src="script.js"></script>
 
     <div class="quiz-container">
         <h2>Quiz de Casal ❤️</h1>
