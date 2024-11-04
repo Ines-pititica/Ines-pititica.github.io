@@ -125,10 +125,32 @@
             font-size: 24px;
             transform: rotateY(0); /* Costas da carta visíveis inicialmente */
         }
+        .section {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
     
     </style>
 </head>
 <body>
+    <div class="section">
+    <h2>Lista de Desejos</h2>
+    <input type="text" id="wishInput" placeholder="Adicionar novo desejo...">
+    <button onclick="addWish()">Adicionar</button>
+    <ul id="wishList"></ul>
+</div>
+
+<div class="section">
+    <h2>Diário</h2>
+    <textarea id="diaryEntry" rows="5" placeholder="Escrever uma nova entrada..."></textarea>
+    <button onclick="addDiaryEntry()">Salvar Entrada</button>
+    <div id="diaryList"></div>
+</div>
+
+<script src="script.js"></script>
+    
    <audio id="background-music" loop>
         <source src="Christina-Perri-A-Thousand-Years.ogg" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
@@ -455,6 +477,109 @@ function showWinMessage() {
         document.querySelectorAll('.memory-card').forEach(card => {
             card.addEventListener('click', flipCard);
         });
+
+        // Função para carregar os desejos e o diário ao iniciar a página
+window.onload = function() {
+    loadWishes();
+    loadDiaryEntries();
+};
+
+// Funções para a Lista de Desejos
+function addWish() {
+    const wishInput = document.getElementById("wishInput");
+    const wish = wishInput.value.trim();
+
+    if (wish) {
+        // Adiciona o desejo ao Local Storage
+        const wishes = JSON.parse(localStorage.getItem("wishes")) || [];
+        wishes.push(wish);
+        localStorage.setItem("wishes", JSON.stringify(wishes));
+
+        // Atualiza a lista na página e limpa o campo de entrada
+        displayWishes();
+        wishInput.value = "";
+    }
+}
+
+function displayWishes() {
+    const wishList = document.getElementById("wishList");
+    wishList.innerHTML = "";
+    const wishes = JSON.parse(localStorage.getItem("wishes")) || [];
+
+    wishes.forEach((wish, index) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = wish;
+
+        // Botão para remover o desejo
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "X";
+        deleteButton.onclick = () => removeWish(index);
+        listItem.appendChild(deleteButton);
+
+        wishList.appendChild(listItem);
+    });
+}
+
+function removeWish(index) {
+    const wishes = JSON.parse(localStorage.getItem("wishes")) || [];
+    wishes.splice(index, 1); // Remove o item pelo índice
+    localStorage.setItem("wishes", JSON.stringify(wishes));
+    displayWishes();
+}
+
+// Funções para o Diário
+function addDiaryEntry() {
+    const diaryInput = document.getElementById("diaryEntry");
+    const entry = diaryInput.value.trim();
+
+    if (entry) {
+        // Adiciona a entrada do diário com a data ao Local Storage
+        const diaryEntries = JSON.parse(localStorage.getItem("diary")) || [];
+        const date = new Date().toLocaleString();
+        diaryEntries.push({ date, entry });
+        localStorage.setItem("diary", JSON.stringify(diaryEntries));
+
+        // Atualiza a lista na página e limpa o campo de entrada
+        displayDiaryEntries();
+        diaryInput.value = "";
+    }
+}
+
+function displayDiaryEntries() {
+    const diaryList = document.getElementById("diaryList");
+    diaryList.innerHTML = "";
+    const diaryEntries = JSON.parse(localStorage.getItem("diary")) || [];
+
+    diaryEntries.forEach((entryData, index) => {
+        const entryDiv = document.createElement("div");
+        entryDiv.innerHTML = `<strong>${entryData.date}</strong><p>${entryData.entry}</p>`;
+
+        // Botão para remover a entrada do diário
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "X";
+        deleteButton.onclick = () => removeDiaryEntry(index);
+        entryDiv.appendChild(deleteButton);
+
+        diaryList.appendChild(entryDiv);
+    });
+}
+
+function removeDiaryEntry(index) {
+    const diaryEntries = JSON.parse(localStorage.getItem("diary")) || [];
+    diaryEntries.splice(index, 1); // Remove o item pelo índice
+    localStorage.setItem("diary", JSON.stringify(diaryEntries));
+    displayDiaryEntries();
+}
+
+// Carrega os dados iniciais para exibição
+function loadWishes() {
+    displayWishes();
+}
+
+function loadDiaryEntries() {
+    displayDiaryEntries();
+}
+        
     </script>
 
 </body>
