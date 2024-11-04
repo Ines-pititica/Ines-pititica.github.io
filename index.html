@@ -379,30 +379,15 @@ let matchedPairs = 0;
         let lockBoard = false;
         let firstCard, secondCard;
         let attempts = 0; // Contador de tentativas
-        
-        let clickCount = 0;
 
         
         
 function flipCard() {
-    // Incrementa o contador de cliques
-    clickCount++;
+    // Incrementa o contador de tentativas
+    attempts++;
 
-    // Lógica para virar a carta
+    // Lógica para virar a carta, verificar pares, etc.
     // ...
-
-    // Verifica se duas cartas foram clicadas
-    if (clickCount === 2) {
-        attempts++; // Incrementa o contador de tentativas
-        clickCount = 0; // Reinicia o contador de cliques
-
-        // Lógica para verificar se as cartas formam um par
-        // ...
-        // Se todas as cartas forem encontradas
-        if (matchedPairs === totalPairs) {
-            showWinMessage(); // Chama a função para mostrar a mensagem de vitória
-        }
-    }
 }
 
         function checkForMatch() {
