@@ -369,6 +369,7 @@
                 </div>
             `;
         });
+        let attempts = 0; // Contador de tentativas
 const totalPairs = images.length;
 let matchedPairs = 0;
         
@@ -378,6 +379,8 @@ let matchedPairs = 0;
         let firstCard, secondCard;
 
         function flipCard() {
+            attempts++;
+
             if (lockBoard) return;
             if (this === firstCard) return;
 
