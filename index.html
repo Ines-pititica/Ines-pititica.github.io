@@ -370,33 +370,18 @@
             `;
         });
         let attempts = 0; // Contador de tentativas
-const totalPairs = images.length;
-let matchedPairs = 0;
-        
-   // Lógica do jogo
-        let hasFlippedCard = false;
-        let lockBoard = false;
-        let firstCard, secondCard;
+let matchedPairs = 0; // Contador de pares encontrados
+const totalPairs = 8; // Número total de pares no jogo
 
-        function flipCard() {
-            attempts++;
+// Função que lida com o clique nas cartas
+function flipCard() {
+    // Incrementa o contador de tentativas
+    attempts++;
 
-            if (lockBoard) return;
-            if (this === firstCard) return;
+    // Lógica para virar a carta, verificar pares, etc.
+    // ...
+}
 
-            this.classList.add('flip');
-
-            if (!hasFlippedCard) {
-                // Primeira carta virada
-                hasFlippedCard = true;
-                firstCard = this;
-                return;
-            }
-
-            // Segunda carta virada
-            secondCard = this;
-            checkForMatch();
-        }
 
         function checkForMatch() {
     const isMatch = firstCard.dataset.image === secondCard.dataset.image;
