@@ -261,22 +261,6 @@
         atualizarContador(); // Chama imediatamente para não esperar 1 segundo
     </script>
 
-    <div class="section">
-    <h2>Lista de Desejos</h2>
-    <input type="text" id="wishInput" placeholder="Adicionar novo desejo...">
-    <button onclick="addWish()">Adicionar</button>
-    <ul id="wishList"></ul>
-</div>
-
-<div class="section">
-    <h2>Diário</h2>
-    <textarea id="diaryEntry" rows="5" placeholder="Escrever uma nova entrada..."></textarea>
-    <button onclick="addDiaryEntry()">Salvar Entrada</button>
-    <div id="diaryList"></div>
-</div>
-
-<script src="script.js"></script>
-
     <div class="quiz-container">
         <h2>Quiz de Casal ❤️</h1>
         <div id="quiz"></div>
@@ -582,6 +566,22 @@ function loadDiaryEntries() {
 }
         
     </script>
+
+    <div class="section">
+    <h2>Lista de Desejos</h2>
+    <input type="text" id="wishInput" placeholder="O que quiseres...">
+    <button onclick="addWish()">Adicionar</button>
+    <ul id="wishList"></ul>
+</div>
+
+<div class="section">
+    <h2>Diário</h2>
+    <textarea id="diaryEntry" rows="5" placeholder="Conta o teu dia..."></textarea>
+    <button onclick="addDiaryEntry()">Guardar</button>
+    <div id="diaryList"></div>
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
