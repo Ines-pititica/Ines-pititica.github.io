@@ -338,27 +338,10 @@
     </div>
 
     <!-- Mensagem para quando todos os pares forem encontrados -->
-<div id="winMessage" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 10;">
-    <div style="background-color: #D81B60; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); text-align: center;">
-        <p>Parabéns, meu amor! 💖 Você encontrou todos os pares!</p>
-    </div>
+<div id="winMessage" style="display: none; font-size: 20px; margin-top: 20px; color: #D81B60;">
+    Parabéns, meu amor! 💖 Você encontrou todos os pares!
 </div>
 
-
-    function closeWinMessage() {
-    const winMessage = document.getElementById('winMessage');
-    winMessage.style.display = 'none';
-
-    // Reiniciar o jogo
-    matchedPairs = 0; // Reseta o contador de pares
-    document.querySelectorAll('.memory-card').forEach(card => {
-        card.classList.remove('flip');
-        card.addEventListener('click', flipCard); // Reativa o clique nas cartas
-    });
-}
-    window.onload = function() {
-    document.getElementById('winMessage').style.display = 'none';
-};
 
     <script>
         // Lista de imagens do casal
@@ -433,12 +416,7 @@ let matchedPairs = 0;
 
 function showWinMessage() {
     const winMessage = document.getElementById('winMessage');
-    winMessage.style.display = 'flex'; // Exibe a mensagem de vitória
-
-    // Oculta a mensagem após 5 segundos (5000 milissegundos)
-    setTimeout(() => {
-        winMessage.style.display = 'none';
-    }, 5000);
+    winMessage.style.display = 'block'; // Exibe a mensagem de vitória
 }
 
         function disableCards() {
