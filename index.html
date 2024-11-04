@@ -374,35 +374,47 @@
 // Variáveis globais
 let attempts = 0; // Contador de tentativas
 let matchedPairs = 0; // Contador de pares encontrados
-const totalPairs = 8; // Número total de pares no jogo
+const totalPairs = 6; // Número total de pares no jogo
+let firstCard, secondCard; // Variáveis para armazenar as cartas clicadas
+let lockBoard = false; // Bloqueia o tabuleiro enquanto duas cartas são comparadas
 
 // Função que lida com o clique nas cartas
 function flipCard(card) {
-    // Incrementa o contador de tentativas a cada clique
-    attempts++;
+    if (lockBoard || card === firstCard || card.classList.contains('matched')) return;
 
-    // Lógica para virar a carta
     card.classList.add('flipped');
 
-    // Verifica se duas cartas foram viradas
-    const flippedCards = document.querySelectorAll('.flipped');
-    if (flippedCards.length === 2) {
-        // Verifica se as cartas formam um par
-        if (flippedCards[0].dataset.name === flippedCards[1].dataset.name) {
-            matchedPairs++; // Incrementa o contador de pares encontrados
-            flippedCards.forEach(card => card.classList.remove('flipped'));
-            flippedCards.forEach(card => card.classList.add('matched'));
-        } else {
-            // Se não forem um par, desvira as cartas após uma pequena pausa
-            setTimeout(() => {
-                flippedCards.forEach(card => card.classList.remove('flipped'));
-            }, 1000);
-        }
+    if (!firstCard) {
+        // Primeira carta clicada
+        firstCard = card;
+    } else {
+        // Segunda carta clicada
+        secondCard = card;
+        attempts++; // Incrementa o contador de tentativas
+        checkForMatch(); // Verifica se as cartas formam um par
+    }
+}
+        function checkForMatch() {
+    lockBoard = true; // Bloqueia o tabuleiro temporariamente
+
+    if (firstCard.dataset.name === secondCard.dataset.name) {
+        // Cartas combinam, mantém elas viradas e marca como "matched"
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        matchedPairs++; // Incrementa o contador de pares encontrados
+        resetBoard();
 
         // Verifica se o jogo foi concluído
         if (matchedPairs === totalPairs) {
-            showWinMessage(); // Chama a função para mostrar a mensagem de vitória
+            showWinMessage(); // Exibe a mensagem de vitória
         }
+    } else {
+        // Se não forem um par, desvira as cartas após uma pequena pausa
+        setTimeout(() => {
+            firstCard.classList.remove('flipped');
+            secondCard.classList.remove('flipped');
+            resetBoard();
+        }, 1000);
     }
 }
 
