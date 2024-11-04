@@ -308,9 +308,9 @@
         function checkAnswer() {
             if (selectedAnswer === quizData[currentQuestion].correct) {
                 score++;
-                alert("Correto! ❤️");
+                alert("Certo! ❤️");
             } else {
-                alert("Ops, resposta errada! 😅");
+                alert("Errado! 😠");
             }
 
             // Próxima pergunta
@@ -322,7 +322,7 @@
             } else {
                 // Mostrar o resultado final
                 document.getElementById("quiz").innerHTML = "";
-                document.getElementById("result").innerHTML = `Você acertou ${score} de ${quizData.length} perguntas!`;
+                document.getElementById("result").innerHTML = `Acertaste ${score} de ${quizData.length} perguntas!`;
             }
         }
 
