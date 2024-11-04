@@ -443,16 +443,3 @@ function flipCard() {
 
 </body>
 </html>
- 
-function showWinMessage() {
-    const winMessage = document.getElementById('winMessage');
-    winMessage.style.display = 'flex'; // Exibe a mensagem de vitória
-
-    winMessage.innerHTML = `Parabéns, meu amor! 💖<br>Tentativas feitas: ${attempts}`;
-    
-    // Oculta a mensagem após 5 segundos (5000 milissegundos)
-    setTimeout(() => {
-        winMessage.style.display = 'none';
-    }, 5000);
-
-}
