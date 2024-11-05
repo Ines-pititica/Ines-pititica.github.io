@@ -140,7 +140,6 @@
             touch-action: none;
         }
 
-        /* Estilo da mensagem sobre o jogo */
         #resultOverlay {
             position: absolute;
             top: 50%;
@@ -154,6 +153,8 @@
             display: none;
             text-align: center;
             z-index: 10;
+            max-width: 90%;
+            box-sizing: border-box;
         }
 
 
@@ -619,6 +620,8 @@ function loadDiaryEntries() {
     <canvas id="canvas" width="500" height="400"></canvas>
 
     <div class="controls">
+        <input type="text" id="wordInput" placeholder="Defina uma palavra secreta 🎨" autocomplete="off">
+        <button onclick="setWord()">Definir Palavra</button>
         <button onclick="clearCanvas()">Limpar Canvas 🖌️</button>
     </div>
 
@@ -633,6 +636,7 @@ function loadDiaryEntries() {
         const guessInput = document.getElementById('guess');
         const submitGuess = document.getElementById('submitGuess');
         const resultOverlay = document.getElementById('resultOverlay');
+        const wordInput = document.getElementById('wordInput');
         let guessWord = '';
         let drawing = false;
 
