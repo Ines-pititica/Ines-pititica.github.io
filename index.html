@@ -172,10 +172,11 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            border: 10px solid #ff4081;
+            border: 8px solid #ff4081;
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            transform: rotate(-30deg); /* Alinha a primeira pergunta ao topo */
         }
 
         .segment {
@@ -194,12 +195,12 @@
             text-align: center;
         }
 
-        .segment:nth-child(1) { transform: rotate(0deg) skewY(-30deg); }
-        .segment:nth-child(2) { transform: rotate(60deg) skewY(-30deg); }
-        .segment:nth-child(3) { transform: rotate(120deg) skewY(-30deg); }
-        .segment:nth-child(4) { transform: rotate(180deg) skewY(-30deg); }
-        .segment:nth-child(5) { transform: rotate(240deg) skewY(-30deg); }
-        .segment:nth-child(6) { transform: rotate(300deg) skewY(-30deg); }
+        .segment:nth-child(1) { transform: rotate(0deg) skewY(-30deg); background-color: #ffcad4; }
+        .segment:nth-child(2) { transform: rotate(60deg) skewY(-30deg); background-color: #ffd6e7; }
+        .segment:nth-child(3) { transform: rotate(120deg) skewY(-30deg); background-color: #ffcad4; }
+        .segment:nth-child(4) { transform: rotate(180deg) skewY(-30deg); background-color: #ffd6e7; }
+        .segment:nth-child(5) { transform: rotate(240deg) skewY(-30deg); background-color: #ffcad4; }
+        .segment:nth-child(6) { transform: rotate(300deg) skewY(-30deg); background-color: #ffd6e7; }
 
         #spinButton {
             margin-top: 20px;
@@ -222,8 +223,17 @@
             font-size: 1.2em;
             color: #555;
         }
+
+        #pointer {
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 20px solid #ff4081;
+            position: absolute;
+            top: -30px;
+        }
         
-    
     </style>
 </head>
 <body>
@@ -780,6 +790,7 @@ function loadDiaryEntries() {
 
     <h2>Roleta de Perguntas Românticas</h1>
 
+    <div id="pointer"></div> <!-- Indicador de onde a roleta vai parar -->
     <div id="wheel">
         <div class="segment">Qual foi seu momento favorito juntos?</div>
         <div class="segment">Qual característica você mais admira em mim?</div>
