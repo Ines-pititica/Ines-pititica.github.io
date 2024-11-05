@@ -626,7 +626,7 @@ function loadDiaryEntries() {
     
    <!-- Caixa de texto e botões reposicionados para cima do jogo -->
     <div id="controls">
-        <input type="text" id="wordInput" placeholder="Defina uma palavra secreta 🎨" autocomplete="off">
+        <input type="text" id="wordInput" placeholder="Define uma palavra secreta 🎨" autocomplete="off">
         <button onclick="setWord()">Definir Palavra</button>
         <button onclick="clearCanvas()">Limpar Canvas 🖌️</button>
     </div>
@@ -637,8 +637,8 @@ function loadDiaryEntries() {
     </div>
 
     <div class="guess-section">
-        <input type="text" id="guess" placeholder="Tente adivinhar o desenho! 💭" autocomplete="off">
-        <button id="submitGuess">Enviar Adivinhação 💘</button>
+        <input type="text" id="guess" placeholder="Tenta adivinhar o desenho! 💭" autocomplete="off">
+        <button id="submitGuess">Enviar resposta 💘</button>
     </div>
 
     <script>
@@ -716,9 +716,9 @@ function loadDiaryEntries() {
         submitGuess.addEventListener('click', () => {
             const guess = guessInput.value.toLowerCase();
             if (guess === guessWord) {
-                showMessage('Parabéns, acertou em cheio! 💕', 'green');
+                showMessage('Parabéns, acertaste! 💕', 'green');
             } else {
-                showMessage('Hmmm, quase! Tente de novo... 💌', 'red');
+                showMessage('Hmmm, quase! Tenta de novo... 💌', 'red');
             }
             guessInput.value = '';
         });
