@@ -137,30 +137,23 @@
             border: 2px solid #000;
             cursor: crosshair;
             margin-top: 20px;
-            touch-action: none; /* Evita o scroll durante o toque */
+            touch-action: none;
         }
 
-        .controls, .guess-section, .word-selection {
-            margin-top: 20px;
-        }
-
-        button {
-            background-color: #ff4081;
+        /* Estilo da mensagem sobre o jogo */
+        #resultOverlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            margin: 5px;
-        }
-
-        button:hover {
-            background-color: #e91e63;
-        }
-
-        #result {
+            padding: 15px;
+            border-radius: 8px;
             font-size: 1.2em;
-            color: #333;
-            margin-top: 10px;
+            display: none;
+            text-align: center;
+            z-index: 10;
         }
 
 
@@ -620,58 +613,44 @@ function loadDiaryEntries() {
 
     <h2>Tu desenhas, eu adivinho!</h1>
     
-    <!-- Seção de escolha de palavra -->
-    <div class="word-selection">
-        <input type="text" id="wordInput" placeholder="Digite uma palavra para desenhar!" autocomplete="off">
-        <button onclick="setWord()">Definir Palavra</button>
-    </div>
+    <!-- Mensagem de resultado sobre o jogo -->
+    <div id="resultOverlay"></div>
 
-    <!-- Canvas para desenho -->
     <canvas id="canvas" width="500" height="400"></canvas>
 
-    <!-- Botão para limpar o canvas -->
     <div class="controls">
-        <button onclick="clearCanvas()">Limpar Canvas</button>
+        <button onclick="clearCanvas()">Limpar Canvas 🖌️</button>
     </div>
 
-    <!-- Seção de adivinhação -->
     <div class="guess-section">
-        <input type="text" id="guess" placeholder="Adivinhe o que é!" autocomplete="off">
-        <button id="submitGuess">Enviar Adivinhação</button>
+        <input type="text" id="guess" placeholder="Tente adivinhar o desenho! 💭" autocomplete="off">
+        <button id="submitGuess">Enviar Adivinhação 💘</button>
     </div>
-    
-    <!-- Resultado da adivinhação -->
-    <p id="resultDrawingGame"></p>
 
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const guessInput = document.getElementById('guess');
         const submitGuess = document.getElementById('submitGuess');
-        const resultDrawingGame = document.getElementById('resultDrawingGame');
-        const wordInput = document.getElementById('wordInput');
-        let guessWord = ''; // Palavra escolhida para adivinhação
-        let drawing = false; // Verifica se o desenho está ativo
+        const resultOverlay = document.getElementById('resultOverlay');
+        let guessWord = '';
+        let drawing = false;
 
-        // Configurações do estilo de desenho
         ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#ff4081';
 
-        // Função para definir a palavra escolhida
         function setWord() {
             guessWord = wordInput.value.toLowerCase();
-            wordInput.value = ''; // Limpa o campo de texto
-            resultDrawingGame.textContent = 'Palavra definida! Agora desenhe e deixe o outro jogador adivinhar.';
+            wordInput.value = '';
+            showMessage('Palavra secreta escolhida! 🎨 Boa sorte!', '#ff4081');
         }
 
-        // Eventos para desenho com mouse
         canvas.addEventListener('mousedown', (e) => startDrawing(e.offsetX, e.offsetY));
         canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
 
-        // Eventos para desenho em dispositivos móveis
         canvas.addEventListener('touchstart', (e) => {
             const touch = e.touches[0];
             const rect = canvas.getBoundingClientRect();
@@ -688,7 +667,6 @@ function loadDiaryEntries() {
 
         canvas.addEventListener('touchend', stopDrawing);
 
-        // Funções para iniciar, desenhar e parar o desenho
         function startDrawing(x, y) {
             drawing = true;
             ctx.beginPath();
@@ -706,27 +684,30 @@ function loadDiaryEntries() {
             ctx.closePath();
         }
 
-        // Função para limpar o canvas
         function clearCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        // Lógica para verificar a adivinhação
+        function showMessage(message, color) {
+            resultOverlay.textContent = message;
+            resultOverlay.style.backgroundColor = color;
+            resultOverlay.style.display = 'block';
+
+            setTimeout(() => {
+                resultOverlay.style.display = 'none';
+            }, 5000);
+        }
+
         submitGuess.addEventListener('click', () => {
             const guess = guessInput.value.toLowerCase();
             if (guess === guessWord) {
-                resultDrawingGame.textContent = 'Você acertou! 🎉';
-                resultDrawingGame.style.color = 'green';
+                showMessage('Parabéns, acertou em cheio! 💕', 'green');
             } else {
-                resultDrawingGame.textContent = 'Tente novamente!';
-               resultDrawingGame.style.color = 'red';
+                showMessage('Hmmm, quase! Tente de novo... 💌', 'red');
             }
             guessInput.value = '';
         });
     </script>
 
-
-
-
-</body>
+    </body>
 </html>
