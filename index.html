@@ -131,6 +131,39 @@
             border: 1px solid #ddd;
             border-radius: 8px;
         }
+
+
+         #canvas {
+            border: 2px solid #000;
+            cursor: crosshair;
+            margin-top: 20px;
+        }
+
+        .controls, .guess-section, .word-selection {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #e91e63;
+        }
+
+        #result {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 10px;
+        }
+
+
+        
     
     </style>
 </head>
@@ -582,6 +615,102 @@ function loadDiaryEntries() {
 </div>
 
 <script src="script.js"></script>
+
+
+    <h1>Jogo de Desenho e Adivinhação</h1>
+    
+    <!-- Seção de escolha de palavra -->
+    <div class="word-selection">
+        <input type="text" id="wordInput" placeholder="Digite uma palavra para desenhar!" autocomplete="off">
+        <button onclick="setWord()">Definir Palavra</button>
+    </div>
+
+    <!-- Canvas para desenho -->
+    <canvas id="canvas" width="500" height="400"></canvas>
+
+    <!-- Botão para limpar o canvas -->
+    <div class="controls">
+        <button onclick="clearCanvas()">Limpar Canvas</button>
+    </div>
+
+    <!-- Seção de adivinhação -->
+    <div class="guess-section">
+        <input type="text" id="guess" placeholder="Adivinhe o que é!" autocomplete="off">
+        <button id="submitGuess">Enviar Adivinhação</button>
+    </div>
+    
+    <!-- Resultado da adivinhação -->
+    <p id="result"></p>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const guessInput = document.getElementById('guess');
+        const submitGuess = document.getElementById('submitGuess');
+        const result = document.getElementById('result');
+        const wordInput = document.getElementById('wordInput');
+        let guessWord = ''; // Palavra escolhida para adivinhação
+        let drawing = false; // Verifica se o desenho está ativo
+
+        // Configurações do estilo de desenho
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#ff4081';
+
+        // Função para definir a palavra escolhida
+        function setWord() {
+            guessWord = wordInput.value.toLowerCase();
+            wordInput.value = ''; // Limpa o campo de texto
+            result.textContent = 'Palavra definida! Agora desenhe e deixe o outro jogador adivinhar.';
+        }
+
+        // Inicia o desenho ao pressionar o mouse
+        canvas.addEventListener('mousedown', (e) => {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        // Desenha ao mover o mouse
+        canvas.addEventListener('mousemove', (e) => {
+            if (drawing) {
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+        });
+
+        // Para de desenhar ao soltar o mouse
+        canvas.addEventListener('mouseup', () => {
+            drawing = false;
+            ctx.closePath();
+        });
+
+        // Para de desenhar se o cursor sair do canvas
+        canvas.addEventListener('mouseout', () => {
+            drawing = false;
+        });
+
+        // Função para limpar o canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Lógica para verificar a adivinhação
+        submitGuess.addEventListener('click', () => {
+            const guess = guessInput.value.toLowerCase();
+            if (guess === guessWord) {
+                result.textContent = 'Você acertou! 🎉';
+                result.style.color = 'green';
+            } else {
+                result.textContent = 'Tente novamente!';
+                result.style.color = 'red';
+            }
+            guessInput.value = '';
+        });
+    </script>
+
+
+
 
 </body>
 </html>
