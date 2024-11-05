@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tempo de Namoro</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             display: flex;
@@ -18,30 +17,6 @@
             text-align: center;
             margin: 0;
         }
-
-        #canvas {
-    border: 1px solid #000;
-}
-
-input {
-    margin-top: 10px;
-    padding: 10px;
-    width: 200px;
-}
-
-button {
-    margin-top: 5px;
-    padding: 10px 15px;
-    background-color: #ff4081;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #e91e63;
-}
-        
          .countdown {
             font-size: 1.2em;
             margin: 20px;
@@ -156,13 +131,6 @@ button:hover {
             border: 1px solid #ddd;
             border-radius: 8px;
         }
-
-        <h1>Jogo de Desenho!</h1>
-    <canvas id="canvas" width="400" height="400"></canvas>
-    <input type="text" id="guess" placeholder="Adivinhe o que é!">
-    <button id="submitGuess">Enviar Adivinhação</button>
-    <p id="result"></p>
-    <script src="script.js"></script>
     
     </style>
 </head>
@@ -412,58 +380,6 @@ button:hover {
         // Número total de pares e contador de pares combinados
 const totalPairs = images.length;
 let matchedPairs = 0;
-        const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const guessInput = document.getElementById('guess');
-const submitGuess = document.getElementById('submitGuess');
-const result = document.getElementById('result');
-
-let drawing = false;
-let guessWord = 'cachorro'; // Palavra para adivinhar (pode ser aleatória)
-let timer; // Variável para armazenar o temporizador
-        
-        canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', stopDrawing);
-canvas.addEventListener('mouseout', stopDrawing);
-
-        
-function startDrawing(e) {
-    drawing = true;
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-}
-
-function draw(e) {
-    if (drawing) {
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
-    }
-}
-
-function stopDrawing() {
-    drawing = false;
-    ctx.closePath();
-}
-
-submitGuess.addEventListener('click', () => {
-    const guess = guessInput.value.toLowerCase();
-    if (guess === guessWord) {
-        result.textContent = 'Você acertou! 🎉';
-    } else {
-        result.textContent = 'Tente novamente!';
-    }
-    guessInput.value = '';
-});
-
-// Adicione um temporizador (opcional)
-setTimeout(() => {
-    if (!drawing) {
-        alert('Tempo esgotado! O que você estava desenhando era: ' + guessWord);
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas
-    }
-}, 60000); // Tempo de 60 segundos
-        
 
         // Lógica do jogo
         let hasFlippedCard = false;
@@ -613,6 +529,7 @@ function addDiaryEntry() {
         diaryInput.value = "";
     }
 }
+
 function displayDiaryEntries() {
     const diaryList = document.getElementById("diaryList");
     diaryList.innerHTML = "";
@@ -665,7 +582,6 @@ function loadDiaryEntries() {
 </div>
 
 <script src="script.js"></script>
-    
 
 </body>
 </html>
