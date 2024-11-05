@@ -168,42 +168,25 @@
         }
 
         
-#wheel {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            border: 8px solid #ff4081;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            transform: rotate(-30deg); /* Alinha a primeira pergunta ao topo */
-        }
-
-        .segment {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            background-color: #ffd6e7;
-            transform-origin: 100% 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #555;
-            font-size: 0.9em;
-            font-weight: bold;
-            padding: 10px;
+#roulette {
+            margin: 20px;
+            width: 80%;
+            max-width: 400px;
+            padding: 20px;
+            border: 2px solid #ff4081;
+            border-radius: 10px;
+            background-color: #fff;
             text-align: center;
+            font-size: 1.2em;
+            color: #555;
         }
 
-        .segment:nth-child(1) { transform: rotate(0deg) skewY(-30deg); background-color: #ffcad4; }
-        .segment:nth-child(2) { transform: rotate(60deg) skewY(-30deg); background-color: #ffd6e7; }
-        .segment:nth-child(3) { transform: rotate(120deg) skewY(-30deg); background-color: #ffcad4; }
-        .segment:nth-child(4) { transform: rotate(180deg) skewY(-30deg); background-color: #ffd6e7; }
-        .segment:nth-child(5) { transform: rotate(240deg) skewY(-30deg); background-color: #ffcad4; }
-        .segment:nth-child(6) { transform: rotate(300deg) skewY(-30deg); background-color: #ffd6e7; }
+        #question {
+            padding: 20px;
+            font-weight: bold;
+        }
 
         #spinButton {
-            margin-top: 20px;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -217,23 +200,8 @@
         #spinButton:hover {
             background-color: #e73370;
         }
-
-        #question {
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #555;
-        }
-
-        #pointer {
-            width: 0; 
-            height: 0; 
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 20px solid #ff4081;
-            position: absolute;
-            top: -30px;
-        }
         
+    
     </style>
 </head>
 <body>
@@ -790,43 +758,35 @@ function loadDiaryEntries() {
 
     <h2>Roleta de Perguntas Românticas</h1>
 
-    <div id="pointer"></div> <!-- Indicador de onde a roleta vai parar -->
-    <div id="wheel">
-        <div class="segment">Qual foi seu momento favorito juntos?</div>
-        <div class="segment">Qual característica você mais admira em mim?</div>
-        <div class="segment">Se pudéssemos viajar, para onde iríamos?</div>
-        <div class="segment">Qual é o seu sonho mais louco comigo?</div>
-        <div class="segment">Qual música te lembra de mim?</div>
-        <div class="segment">O que mais te surpreendeu sobre mim?</div>
+    <div id="roulette">
+        <div id="question">Clique em "Girar" para receber uma pergunta!</div>
+        <button id="spinButton" onclick="spinRoulette()">Girar 🎡</button>
     </div>
-    
-    <button id="spinButton" onclick="spinRoulette()">Girar 🎡</button>
-    <div id="question"></div>
 
     <script>
         const questions = [
-            "Qual foi seu momento favorito juntos?",
+            "Qual foi seu momento favorito juntos até agora?",
             "Qual característica você mais admira em mim?",
             "Se pudéssemos viajar para qualquer lugar, para onde iríamos?",
             "Qual é o seu sonho mais louco comigo?",
+            "Se nossa história fosse um filme, como ele seria?",
             "Qual música te lembra de mim?",
-            "O que mais te surpreendeu sobre mim?"
+            "Qual foi a primeira coisa que você notou em mim?",
+            "O que você gostaria que fizéssemos juntos mais vezes?",
+            "Qual é sua lembrança mais feliz comigo?",
+            "Se pudéssemos passar um dia juntos sem limitações, como ele seria?",
+            "Qual foi o momento mais engraçado que passamos juntos?",
+            "Como você descreveria nosso relacionamento em uma palavra?",
+            "O que mais te surpreendeu sobre mim?",
+            "Se pudesse descrever nosso amor como uma cor, qual seria?",
+            "Qual foi o melhor presente que você recebeu de mim?"
         ];
 
         function spinRoulette() {
-            const wheel = document.getElementById('wheel');
-            const randomSpin = Math.floor(Math.random() * 360) + 3600; // Gira várias vezes
-            const selectedQuestionIndex = Math.floor(((randomSpin % 360) / 60) + 0.5) % questions.length;
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const randomQuestion = questions[randomIndex];
             const questionElement = document.getElementById('question');
-
-            // Aplica a rotação e escolhe a pergunta
-            wheel.style.transition = 'transform 4s ease-out';
-            wheel.style.transform = `rotate(${randomSpin}deg)`;
-
-            // Mostra a pergunta ao final da rotação
-            setTimeout(() => {
-                questionElement.textContent = questions[selectedQuestionIndex];
-            }, 4000); // Ajuste de tempo para o final da rotação
+            questionElement.textContent = randomQuestion;
         }
     </script>
 
