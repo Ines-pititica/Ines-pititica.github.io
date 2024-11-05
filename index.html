@@ -194,7 +194,6 @@
             text-align: center;
         }
 
-        /* Cada segmento é girado em um ângulo diferente */
         .segment:nth-child(1) { transform: rotate(0deg) skewY(-30deg); }
         .segment:nth-child(2) { transform: rotate(60deg) skewY(-30deg); }
         .segment:nth-child(3) { transform: rotate(120deg) skewY(-30deg); }
@@ -222,12 +221,6 @@
             margin-top: 20px;
             font-size: 1.2em;
             color: #555;
-        }
-
-        /* Animação de rotação da roleta */
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
         
     
@@ -812,7 +805,7 @@ function loadDiaryEntries() {
         function spinRoulette() {
             const wheel = document.getElementById('wheel');
             const randomSpin = Math.floor(Math.random() * 360) + 3600; // Gira várias vezes
-            const selectedQuestionIndex = Math.floor((randomSpin % 360) / 60); // 6 segmentos de 60 graus cada
+            const selectedQuestionIndex = Math.floor(((randomSpin % 360) / 60) + 0.5) % questions.length;
             const questionElement = document.getElementById('question');
 
             // Aplica a rotação e escolhe a pergunta
