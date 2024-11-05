@@ -137,6 +137,7 @@
             border: 2px solid #000;
             cursor: crosshair;
             margin-top: 20px;
+            touch-action: none; /* Evita o scroll durante o toque */
         }
 
         .controls, .guess-section, .word-selection {
@@ -664,31 +665,46 @@ function loadDiaryEntries() {
             result.textContent = 'Palavra definida! Agora desenhe e deixe o outro jogador adivinhar.';
         }
 
-        // Inicia o desenho ao pressionar o mouse
-        canvas.addEventListener('mousedown', (e) => {
+        // Eventos para desenho com mouse
+        canvas.addEventListener('mousedown', (e) => startDrawing(e.offsetX, e.offsetY));
+        canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Eventos para desenho em dispositivos móveis
+        canvas.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
+            e.preventDefault();
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            draw(touch.clientX - rect.left, touch.clientY - rect.top);
+            e.preventDefault();
+        });
+
+        canvas.addEventListener('touchend', stopDrawing);
+
+        // Funções para iniciar, desenhar e parar o desenho
+        function startDrawing(x, y) {
             drawing = true;
             ctx.beginPath();
-            ctx.moveTo(e.offsetX, e.offsetY);
-        });
+            ctx.moveTo(x, y);
+        }
 
-        // Desenha ao mover o mouse
-        canvas.addEventListener('mousemove', (e) => {
-            if (drawing) {
-                ctx.lineTo(e.offsetX, e.offsetY);
-                ctx.stroke();
-            }
-        });
+        function draw(x, y) {
+            if (!drawing) return;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
 
-        // Para de desenhar ao soltar o mouse
-        canvas.addEventListener('mouseup', () => {
+        function stopDrawing() {
             drawing = false;
             ctx.closePath();
-        });
-
-        // Para de desenhar se o cursor sair do canvas
-        canvas.addEventListener('mouseout', () => {
-            drawing = false;
-        });
+        }
 
         // Função para limpar o canvas
         function clearCanvas() {
