@@ -157,7 +157,7 @@
             background-color: #e91e63;
         }
 
-        #result {
+        #result1 {
             font-size: 1.2em;
             color: #333;
             margin-top: 10px;
@@ -641,14 +641,14 @@ function loadDiaryEntries() {
     </div>
     
     <!-- Resultado da adivinhação -->
-    <p id="result"></p>
+    <p id="result1"></p>
 
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const guessInput = document.getElementById('guess');
         const submitGuess = document.getElementById('submitGuess');
-        const result = document.getElementById('result');
+        const result1 = document.getElementById('result');
         const wordInput = document.getElementById('wordInput');
         let guessWord = ''; // Palavra escolhida para adivinhação
         let drawing = false; // Verifica se o desenho está ativo
@@ -662,7 +662,7 @@ function loadDiaryEntries() {
         function setWord() {
             guessWord = wordInput.value.toLowerCase();
             wordInput.value = ''; // Limpa o campo de texto
-            result.textContent = 'Palavra definida! Agora desenhe e deixe o outro jogador adivinhar.';
+            result1.textContent = 'Palavra definida! Agora desenhe e deixe o outro jogador adivinhar.';
         }
 
         // Eventos para desenho com mouse
@@ -715,11 +715,11 @@ function loadDiaryEntries() {
         submitGuess.addEventListener('click', () => {
             const guess = guessInput.value.toLowerCase();
             if (guess === guessWord) {
-                result.textContent = 'Você acertou! 🎉';
-                result.style.color = 'green';
+                result1.textContent = 'Você acertou! 🎉';
+                result1.style.color = 'green';
             } else {
-                result.textContent = 'Tente novamente!';
-                result.style.color = 'red';
+                result1.textContent = 'Tente novamente!';
+                result1.style.color = 'red';
             }
             guessInput.value = '';
         });
