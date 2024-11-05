@@ -716,23 +716,14 @@ function loadDiaryEntries() {
             const guess = guessInput.value.toLowerCase();
             if (guess === guessWord) {
                 resultDrawingGame.textContent = 'Você acertou! 🎉';
-                resultDrawingGame.style.color = 'green';
-                
-setTimeout(() => {
-                resultOverlay.style.display = 'none';
-            }, 5000);
-                
+                resultDrawingGame.style.color = 'green';   
         }
                 
             } else {
                 resultDrawingGame.textContent = 'Tente novamente!';
                resultDrawingGame.style.color = 'red';
-            setTimeout(() => {
-                resultOverlay.style.display = 'none';
-            }, 5000);
         }
         
-            }
             guessInput.value = '';
         });
     </script>
