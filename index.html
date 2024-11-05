@@ -133,10 +133,14 @@
         }
 
 
-         #canvas {
+         #game-container {
+            position: relative;
+            margin-top: 20px;
+        }
+
+        #canvas {
             border: 2px solid #000;
             cursor: crosshair;
-            margin-top: 20px;
             touch-action: none;
         }
 
@@ -152,7 +156,7 @@
             font-size: 1.2em;
             display: none;
             text-align: center;
-            z-index: 10;
+            width: 80%;
             max-width: 90%;
             box-sizing: border-box;
         }
@@ -615,9 +619,10 @@ function loadDiaryEntries() {
     <h2>Tu desenhas, eu adivinho!</h1>
     
     <!-- Mensagem de resultado sobre o jogo -->
-    <div id="resultOverlay"></div>
-
-    <canvas id="canvas" width="500" height="400"></canvas>
+    <div id="game-container">
+        <canvas id="canvas" width="500" height="400"></canvas>
+        <div id="resultOverlay"></div>
+    </div>
 
     <div class="controls">
         <input type="text" id="wordInput" placeholder="Defina uma palavra secreta 🎨" autocomplete="off">
