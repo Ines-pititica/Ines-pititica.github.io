@@ -259,6 +259,57 @@
   button:hover {
     background-color: #e85b7e;
   }
+
+    #word {
+     font-size: 36px;
+     margin: 20px;
+     letter-spacing: 5px;
+  }
+
+        .letter-buttons {
+            margin-top: 20px;
+        }
+        .letter-button {
+            font-size: 20px;
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid #d6426a;
+            background-color: #fbeaf1;
+            color: #d6426a;
+            border-radius: 5px;
+        }
+        .letter-button:hover {
+            background-color: #d6426a;
+            color: white;
+        }
+
+        .hangman {
+            font-size: 50px;
+            color: #d6426a;
+            margin-top: 20px;
+        }
+        #input-word-container {
+            margin-top: 20px;
+        }
+        #input-word {
+            font-size: 20px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .reset-button {
+            font-size: 20px;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d6426a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .reset-button:hover {
+            background-color: #9b2d47;
+        }
         
     </style>
 </head>
@@ -955,6 +1006,149 @@ function resetGame() {
 }
 </script>
 
+<h1>Jogo da Forca Romântico</h1>
 
+<div class="game-container" id="game-container">
+    <!-- Primeira fase: Inserir palavra -->
+    <div id="input-word-container">
+        <label for="input-word">Digite a palavra secreta:</label>
+        <input type="text" id="input-word" placeholder="Digite a palavra" maxlength="10">
+        <button onclick="startGame()">Iniciar Jogo</button>
+    </div>
+
+    <!-- Segunda fase: Adivinhar a palavra -->
+    <div id="game-play" style="display: none;">
+        <div id="word"></div>
+        <div id="message"></div>
+        <div class="hangman">
+            <p id="hangman-state">Cabeça</p>
+        </div>
+        <div class="letter-buttons">
+            <!-- Botões de letras serão inseridos aqui -->
+        </div>
+
+        <!-- Botão de reiniciar jogo -->
+        <button class="reset-button" onclick="restartGame()">Reiniciar Jogo</button>
+    </div>
+</div>
+
+<script>
+    let selectedWord = '';
+    let guessedLetters = [];
+    let wrongGuesses = 0;
+
+    // Função para iniciar o jogo
+    function startGame() {
+        const inputWord = document.getElementById('input-word').value.trim().toLowerCase();
+
+        if (inputWord === '' || inputWord.length < 3) {
+            alert('Por favor, insira uma palavra válida com pelo menos 3 letras.');
+            return;
+        }
+
+        selectedWord = inputWord;
+        guessedLetters = [];
+        wrongGuesses = 0;
+
+        // Esconde o campo de entrada de palavra
+        document.getElementById('input-word-container').style.display = 'none';
+
+        // Exibe a fase de adivinhação
+        document.getElementById('game-play').style.display = 'block';
+
+        // Exibe a palavra com os espaços vazios
+        updateWordDisplay();
+        createLetterButtons();
+        updateMessage();
+    }
+
+    // Função para criar os botões de letras
+    function createLetterButtons() {
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        const letterButtonsContainer = document.querySelector('.letter-buttons');
+        letterButtonsContainer.innerHTML = ''; // Limpa os botões antes de recriar
+
+        alphabet.forEach(letter => {
+            const button = document.createElement('button');
+            button.textContent = letter;
+            button.classList.add('letter-button');
+            button.onclick = () => guessLetter(letter);
+            letterButtonsContainer.appendChild(button);
+        });
+    }
+
+    // Função para adivinhar a letra
+    function guessLetter(letter) {
+        if (guessedLetters.includes(letter) || wrongGuesses >= 6) return;
+        
+        guessedLetters.push(letter);
+        
+        if (selectedWord.includes(letter)) {
+            updateWordDisplay();
+        } else {
+            wrongGuesses++;
+            updateHangman();
+        }
+
+        updateMessage();
+    }
+
+    // Função para atualizar o display da palavra
+    function updateWordDisplay() {
+        const wordDisplay = document.getElementById('word');
+        wordDisplay.innerHTML = selectedWord.split('').map(letter => guessedLetters.includes(letter) ? letter : '_').join(' ');
+    }
+
+    // Função para atualizar a mensagem
+    function updateMessage() {
+        const messageElement = document.getElementById('message');
+        if (wrongGuesses >= 6) {
+            messageElement.textContent = 'Você perdeu! A palavra era: ' + selectedWord;
+            endGame();
+        } else if (selectedWord.split('').every(letter => guessedLetters.includes(letter))) {
+            messageElement.textContent = 'Você acertou! Parabéns!';
+            endGame();
+        } else {
+            messageElement.textContent = `Erros: ${wrongGuesses}/6`;
+        }
+    }
+
+    // Função para atualizar o estado do "bonequinho da forca"
+    function updateHangman() {
+        const hangmanStates = [
+            'Cabeça',
+            'Cabeça e tronco',
+            'Cabeça, tronco e um braço',
+            'Cabeça, tronco e dois braços',
+            'Cabeça, tronco, dois braços e uma perna',
+            'Cabeça, tronco, dois braços e duas pernas',
+            'Jogo perdido!'
+        ];
+        document.getElementById('hangman-state').textContent = hangmanStates[wrongGuesses];
+    }
+
+    // Função para finalizar o jogo
+    function endGame() {
+        const letterButtons = document.querySelectorAll('.letter-button');
+        letterButtons.forEach(button => button.disabled = true);
+    }
+
+    // Função para reiniciar o jogo
+    function restartGame() {
+        // Resetando o estado do jogo
+        document.getElementById('input-word-container').style.display = 'block';
+        document.getElementById('game-play').style.display = 'none';
+        document.getElementById('input-word').value = '';
+        document.getElementById('message').textContent = '';
+        document.getElementById('word').textContent = '';
+        document.getElementById('hangman-state').textContent = 'Cabeça';
+
+        // Limpar variáveis
+        selectedWord = '';
+        guessedLetters = [];
+        wrongGuesses = 0;
+    }
+</script>
+    
     </body>
 </html>
