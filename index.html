@@ -201,7 +201,65 @@
             background-color: #e73370;
         }
         
-    
+    #game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .cell {
+    width: 100px;
+    height: 100px;
+    background-color: #fff0f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background-color 0.2s;
+  }
+
+  /* Efeito de Hover para Desktop */
+  @media (hover: hover) {
+    .cell:hover {
+      transform: scale(1.1);
+      background-color: #ffd6e2;
+    }
+  }
+
+  /* Estilo para Mobile */
+  @media (hover: none) {
+    .cell:active {
+      background-color: #ffd6e2;
+      transform: scale(1.05);
+    }
+  }
+
+  #message {
+    margin-top: 20px;
+    font-size: 1.4em;
+    color: #d45571;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #d45571;
+    color: white;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #e85b7e;
+  }
+        
     </style>
 </head>
 <body>
@@ -789,6 +847,74 @@ function loadDiaryEntries() {
             questionElement.textContent = randomQuestion;
         }
     </script>
+
+    <h2>Jogo da Velha Romântico</h1>
+<div id="game-board">
+  <div class="cell" data-index="0"></div>
+  <div class="cell" data-index="1"></div>
+  <div class="cell" data-index="2"></div>
+  <div class="cell" data-index="3"></div>
+  <div class="cell" data-index="4"></div>
+  <div class="cell" data-index="5"></div>
+  <div class="cell" data-index="6"></div>
+  <div class="cell" data-index="7"></div>
+  <div class="cell" data-index="8"></div>
+</div>
+<div id="message"></div>
+<button onclick="resetGame()">Reiniciar Jogo</button>
+
+<script>
+// JavaScript para o Jogo da Velha Romântico
+let board = ['', '', '', '', '', '', '', '', ''];
+let currentPlayer = '❤️';
+let gameActive = true;
+
+const winningConditions = [
+  [0, 1, 2], [3, 4, 5], [6, 7, 8], // linhas
+  [0, 3, 6], [1, 4, 7], [2, 5, 8], // colunas
+  [0, 4, 8], [2, 4, 6]             // diagonais
+];
+
+const cells = document.querySelectorAll('.cell');
+const messageElement = document.getElementById('message');
+
+cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+
+function handleCellClick(event) {
+  const cellIndex = event.target.getAttribute('data-index');
+
+  if (board[cellIndex] !== '' || !gameActive) return;
+
+  board[cellIndex] = currentPlayer;
+  event.target.innerText = currentPlayer;
+
+  if (checkWin()) {
+    messageElement.innerText = `Jogador ${currentPlayer} venceu! 🎉`;
+    gameActive = false;
+  } else if (board.includes('') === false) {
+    messageElement.innerText = 'Empate!';
+    gameActive = false;
+  } else {
+    currentPlayer = currentPlayer === '❤️' ? '⭐' : '❤️';
+    messageElement.innerText = `Vez do jogador ${currentPlayer}`;
+  }
+}
+
+function checkWin() {
+  return winningConditions.some(condition => {
+    return condition.every(index => board[index] === currentPlayer);
+  });
+}
+
+function resetGame() {
+  board = ['', '', '', '', '', '', '', '', ''];
+  currentPlayer = '❤️';
+  gameActive = true;
+  messageElement.innerText = `Vez do jogador ${currentPlayer}`;
+  cells.forEach(cell => (cell.innerText = ''));
+}
+</script>
+
 
     </body>
 </html>
