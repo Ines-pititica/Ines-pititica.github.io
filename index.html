@@ -320,11 +320,37 @@
       max-width: 400px;
       text-align: center;
     }
-        .pedra { background-color: #4CAF50; }
+
+    #ppt-title {
+      color: #ff5c5c;
+      font-size: 24px;
+    }
+
+    .ppt-button {
+      padding: 12px 20px;
+      margin: 10px;
+      font-size: 18px;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .ppt-button:hover {
+      opacity: 0.8;
+    }
+
+    .pedra { background-color: #4CAF50; }
     .papel { background-color: #2196F3; }
     .tesoura { background-color: #FF9800; }
-        
-    </style>
+
+    #ppt-result {
+      font-size: 20px;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
     
@@ -1163,13 +1189,14 @@ function resetGame() {
     }
 </script>
 
-    <h1>Pedra, Papel, Tesoura</h1>
-    <div id="choices">
-      <button class="pedra" onclick="play('pedra')">Pedra</button>
-      <button class="papel" onclick="play('papel')">Papel</button>
-      <button class="tesoura" onclick="play('tesoura')">Tesoura</button>
+    <div id="ppt-game-container">
+    <h1 id="ppt-title">Pedra, Papel, Tesoura</h1>
+    <div id="ppt-choices">
+      <button class="ppt-button pedra" onclick="play('pedra')">Pedra</button>
+      <button class="ppt-button papel" onclick="play('papel')">Papel</button>
+      <button class="ppt-button tesoura" onclick="play('tesoura')">Tesoura</button>
     </div>
-    <div id="result"></div>
+    <div id="ppt-result"></div>
   </div>
 
   <script>
@@ -1179,11 +1206,11 @@ function resetGame() {
       const computadorChoice = escolhas[Math.floor(Math.random() * 3)];
 
       // Mostrar as escolhas
-      document.getElementById("result").innerHTML = `Você escolheu: <strong>${playerChoice}</strong><br>O computador escolheu: <strong>${computadorChoice}</strong>`;
+      document.getElementById("ppt-result").innerHTML = `Você escolheu: <strong>${playerChoice}</strong><br>O computador escolheu: <strong>${computadorChoice}</strong>`;
 
       // Determinar o vencedor
       const resultado = getResult(playerChoice, computadorChoice);
-      document.getElementById("result").innerHTML += `<br><strong>${resultado}</strong>`;
+      document.getElementById("ppt-result").innerHTML += `<br><strong>${resultado}</strong>`;
     }
 
     function getResult(playerChoice, computadorChoice) {
