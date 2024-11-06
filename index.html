@@ -310,6 +310,10 @@
         .reset-button:hover {
             background-color: #9b2d47;
         }
+
+        .pedra { background-color: #4CAF50; }
+    .papel { background-color: #2196F3; }
+    .tesoura { background-color: #FF9800; }
         
     </style>
 </head>
@@ -1149,6 +1153,46 @@ function resetGame() {
         wrongGuesses = 0;
     }
 </script>
+
+    <h1>Pedra, Papel, Tesoura</h1>
+    <div id="choices">
+      <button class="pedra" onclick="play('pedra')">Pedra</button>
+      <button class="papel" onclick="play('papel')">Papel</button>
+      <button class="tesoura" onclick="play('tesoura')">Tesoura</button>
+    </div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const escolhas = ['pedra', 'papel', 'tesoura'];
+
+    function play(playerChoice) {
+      const computadorChoice = escolhas[Math.floor(Math.random() * 3)];
+
+      // Mostrar as escolhas
+      document.getElementById("result").innerHTML = `Você escolheu: <strong>${playerChoice}</strong><br>O computador escolheu: <strong>${computadorChoice}</strong>`;
+
+      // Determinar o vencedor
+      const resultado = getResult(playerChoice, computadorChoice);
+      document.getElementById("result").innerHTML += `<br><strong>${resultado}</strong>`;
+    }
+
+    function getResult(playerChoice, computadorChoice) {
+      if (playerChoice === computadorChoice) {
+        return 'Empate!';
+      }
+
+      if (
+        (playerChoice === 'pedra' && computadorChoice === 'tesoura') ||
+        (playerChoice === 'papel' && computadorChoice === 'pedra') ||
+        (playerChoice === 'tesoura' && computadorChoice === 'papel')
+      ) {
+        return 'Você ganhou!';
+      } else {
+        return 'Você perdeu!';
+      }
+    }
+  </script>
     
     </body>
 </html>
