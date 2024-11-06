@@ -259,6 +259,14 @@
   button:hover {
     background-color: #e85b7e;
   }
+
+        #board { display: grid; grid-template: repeat(8, 50px) / repeat(8, 50px); margin-top: 20px; }
+  .cell { width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; font-size: 24px; }
+  .dark { background-color: #c97898; }
+  .light { background-color: #fbeaf1; }
+  .piece { font-size: 24px; cursor: pointer; }
+  .red { color: #d6426a; }
+  .blue { color: #6a8ed6; }
         
     </style>
 </head>
@@ -955,6 +963,79 @@ function resetGame() {
 }
 </script>
 
+    <h1>Jogo de Damas Romântico</h1>
+<div id="board"></div>
+<p id="message"></p>
+
+<script>
+const boardElement = document.getElementById('board');
+const messageElement = document.getElementById('message');
+let board = Array(8).fill().map(() => Array(8).fill(null));
+let currentPlayer = '❤️'; // Coração vermelho para o jogador 1
+let opponent = '💙'; // Coração azul para o jogador 2
+
+function createBoard() {
+  boardElement.innerHTML = '';
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell', (row + col) % 2 === 0 ? 'light' : 'dark');
+      cell.dataset.row = row;
+      cell.dataset.col = col;
+      
+      // Colocar as peças nas 3 primeiras e últimas linhas
+      if ((row < 3 || row > 4) && (row + col) % 2 !== 0) {
+        const piece = document.createElement('span');
+        piece.classList.add('piece', row < 3 ? 'blue' : 'red');
+        piece.textContent = row < 3 ? opponent : currentPlayer;
+        cell.appendChild(piece);
+        board[row][col] = row < 3 ? opponent : currentPlayer;
+      }
+      
+      cell.addEventListener('click', () => selectPiece(row, col));
+      boardElement.appendChild(cell);
+    }
+  }
+  updateMessage();
+}
+
+let selectedPiece = null;
+
+function selectPiece(row, col) {
+  if (board[row][col] === currentPlayer && !selectedPiece) {
+    selectedPiece = { row, col };
+  } else if (selectedPiece) {
+    movePiece(row, col);
+  }
+}
+
+function movePiece(newRow, newCol) {
+  const { row, col } = selectedPiece;
+  const targetCell = document.querySelector(`[data-row='${newRow}'][data-col='${newCol}']`);
+  
+  if (board[newRow][newCol] === null && Math.abs(newRow - row) === 1 && Math.abs(newCol - col) === 1) {
+    board[newRow][newCol] = currentPlayer;
+    board[row][col] = null;
+    
+    // Atualizar a UI
+    targetCell.appendChild(document.querySelector(`[data-row='${row}'][data-col='${col}'] .piece`));
+    switchPlayer();
+  }
+  
+  selectedPiece = null;
+}
+
+function switchPlayer() {
+  currentPlayer = currentPlayer === '❤️' ? '💙' : '❤️';
+  updateMessage();
+}
+
+function updateMessage() {
+  messageElement.textContent = `É a vez do jogador ${currentPlayer}`;
+}
+
+createBoard();
+</script>
 
     </body>
 </html>
