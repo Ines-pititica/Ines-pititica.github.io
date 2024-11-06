@@ -1006,13 +1006,13 @@ function resetGame() {
 }
 </script>
 
-<h1>Jogo da Forca Romântico</h1>
+<h2>Jogo da Forca Romântico</h1>
 
 <div class="game-container" id="game-container">
     <!-- Primeira fase: Inserir palavra -->
     <div id="input-word-container">
-        <label for="input-word">Digite a palavra secreta:</label>
-        <input type="text" id="input-word" placeholder="Digite a palavra" maxlength="10">
+        <label for="input-word">Digita a palavra secreta:</label>
+        <input type="text" id="input-word" placeholder="Digita a palavra" maxlength="10">
         <button onclick="startGame()">Iniciar Jogo</button>
     </div>
 
@@ -1103,10 +1103,10 @@ function resetGame() {
     function updateMessage() {
         const messageElement = document.getElementById('message');
         if (wrongGuesses >= 6) {
-            messageElement.textContent = 'Você perdeu! A palavra era: ' + selectedWord;
+            messageElement.textContent = 'Perdeste! A palavra era: ' + selectedWord;
             endGame();
         } else if (selectedWord.split('').every(letter => guessedLetters.includes(letter))) {
-            messageElement.textContent = 'Você acertou! Parabéns!';
+            messageElement.textContent = 'Ganhaste!';
             endGame();
         } else {
             messageElement.textContent = `Erros: ${wrongGuesses}/6`;
