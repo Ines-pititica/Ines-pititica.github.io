@@ -849,7 +849,18 @@ function loadDiaryEntries() {
     </script>
 
     <h2>Jogo da Velha Romântico</h1>
-<div id="game-board">
+<!-- Seleção de Emojis para cada jogador -->
+<div id="emoji-selection">
+  <label for="player1Emoji">Escolha o emoji do Jogador 1:</label>
+  <input id="player1Emoji" type="text" value="❤️" maxlength="2">
+  
+  <label for="player2Emoji">Escolha o emoji do Jogador 2:</label>
+  <input id="player2Emoji" type="text" value="⭐" maxlength="2">
+  
+  <button onclick="startGame()">Iniciar Jogo</button>
+</div>
+
+<div id="game-board" style="display: none;">
   <div class="cell" data-index="0"></div>
   <div class="cell" data-index="1"></div>
   <div class="cell" data-index="2"></div>
@@ -860,29 +871,45 @@ function loadDiaryEntries() {
   <div class="cell" data-index="7"></div>
   <div class="cell" data-index="8"></div>
 </div>
+
 <div id="message"></div>
-<button onclick="resetGame()">Reiniciar Jogo</button>
+<button onclick="resetGame()" style="display: none;">Reiniciar Jogo</button>
 
 <script>
-// JavaScript para o Jogo da Velha Romântico
+// JavaScript para o Jogo da Velha com Emojis Escolhidos
 let board = ['', '', '', '', '', '', '', '', ''];
-let currentPlayer = '❤️';
-let gameActive = true;
+let currentPlayer;
+let player1Emoji;
+let player2Emoji;
+let gameActive = false;
 
 const winningConditions = [
-  [0, 1, 2], [3, 4, 5], [6, 7, 8], // linhas
-  [0, 3, 6], [1, 4, 7], [2, 5, 8], // colunas
-  [0, 4, 8], [2, 4, 6]             // diagonais
+  [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+  [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+  [0, 4, 8], [2, 4, 6]
 ];
 
 const cells = document.querySelectorAll('.cell');
 const messageElement = document.getElementById('message');
+const gameBoard = document.getElementById('game-board');
+const resetButton = document.querySelector('button[onclick="resetGame()"]');
 
 cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 
+function startGame() {
+  player1Emoji = document.getElementById('player1Emoji').value || '❤️';
+  player2Emoji = document.getElementById('player2Emoji').value || '⭐';
+  currentPlayer = player1Emoji;
+  gameActive = true;
+  
+  document.getElementById('emoji-selection').style.display = 'none';
+  gameBoard.style.display = 'grid';
+  resetButton.style.display = 'inline-block';
+  messageElement.innerText = `Vez do jogador ${currentPlayer}`;
+}
+
 function handleCellClick(event) {
   const cellIndex = event.target.getAttribute('data-index');
-
   if (board[cellIndex] !== '' || !gameActive) return;
 
   board[cellIndex] = currentPlayer;
@@ -895,7 +922,7 @@ function handleCellClick(event) {
     messageElement.innerText = 'Empate!';
     gameActive = false;
   } else {
-    currentPlayer = currentPlayer === '❤️' ? '⭐' : '❤️';
+    currentPlayer = currentPlayer === player1Emoji ? player2Emoji : player1Emoji;
     messageElement.innerText = `Vez do jogador ${currentPlayer}`;
   }
 }
@@ -908,10 +935,12 @@ function checkWin() {
 
 function resetGame() {
   board = ['', '', '', '', '', '', '', '', ''];
-  currentPlayer = '❤️';
-  gameActive = true;
-  messageElement.innerText = `Vez do jogador ${currentPlayer}`;
+  gameActive = false;
   cells.forEach(cell => (cell.innerText = ''));
+  document.getElementById('emoji-selection').style.display = 'block';
+  gameBoard.style.display = 'none';
+  resetButton.style.display = 'none';
+  messageElement.innerText = '';
 }
 </script>
 
