@@ -851,13 +851,17 @@ function loadDiaryEntries() {
     <h2>Jogo da Velha Romântico</h1>
 <!-- Seleção de Emojis para cada jogador -->
 <div id="emoji-selection">
-  <label for="player1Emoji">Emoji 1:</label>
-  <input id="player1Emoji" type="text" value="❤️" maxlength="2">
+  <div id="player1-selection">
+    <label for="player1Emoji">Jogador 1, escolha seu emoji:</label>
+    <input id="player1Emoji" type="text" value="❤️" maxlength="2">
+    <button onclick="selectPlayer1Emoji()">Confirmar Emoji</button>
+  </div>
   
-  <p><label for="player2Emoji">Emoji 2:</label></p>
-  <input id="player2Emoji" type="text" value="⭐" maxlength="2">
-  
-   <p><button onclick="startGame()">Iniciar Jogo</button> </p>
+  <div id="player2-selection" style="display: none;">
+    <label for="player2Emoji">Jogador 2, escolha seu emoji:</label>
+    <input id="player2Emoji" type="text" value="⭐" maxlength="2">
+    <button onclick="startGame()">Confirmar Emoji</button>
+  </div>
 </div>
 
 <div id="game-board" style="display: none;">
@@ -876,7 +880,7 @@ function loadDiaryEntries() {
 <button onclick="resetGame()" style="display: none;">Reiniciar Jogo</button>
 
 <script>
-// JavaScript para o Jogo da Velha com Emojis Escolhidos
+// JavaScript para o Jogo da Velha com Emojis Escolhidos Alternadamente
 let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer;
 let player1Emoji;
@@ -896,8 +900,13 @@ const resetButton = document.querySelector('button[onclick="resetGame()"]');
 
 cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 
-function startGame() {
+function selectPlayer1Emoji() {
   player1Emoji = document.getElementById('player1Emoji').value || '❤️';
+  document.getElementById('player1-selection').style.display = 'none';
+  document.getElementById('player2-selection').style.display = 'block';
+}
+
+function startGame() {
   player2Emoji = document.getElementById('player2Emoji').value || '⭐';
   currentPlayer = player1Emoji;
   gameActive = true;
@@ -938,6 +947,8 @@ function resetGame() {
   gameActive = false;
   cells.forEach(cell => (cell.innerText = ''));
   document.getElementById('emoji-selection').style.display = 'block';
+  document.getElementById('player1-selection').style.display = 'block';
+  document.getElementById('player2-selection').style.display = 'none';
   gameBoard.style.display = 'none';
   resetButton.style.display = 'none';
   messageElement.innerText = '';
