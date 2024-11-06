@@ -1208,7 +1208,7 @@ function resetGame() {
       const computadorChoice = escolhas[Math.floor(Math.random() * 3)];
 
       // Mostrar as escolhas
-      document.getElementById("ppt-result").innerHTML = `Você escolheu: <strong>${playerChoice}</strong><br>O computador escolheu: <strong>${computadorChoice}</strong>`;
+      document.getElementById("ppt-result").innerHTML = `Escolheste: <strong>${playerChoice}</strong><br>O site escolheu: <strong>${computadorChoice}</strong>`;
 
       // Determinar o vencedor
       const resultado = getResult(playerChoice, computadorChoice);
@@ -1225,9 +1225,9 @@ function resetGame() {
         (playerChoice === 'papel' && computadorChoice === 'pedra') ||
         (playerChoice === 'tesoura' && computadorChoice === 'papel')
       ) {
-        return 'Você ganhou!';
+        return 'Ganhaste!';
       } else {
-        return 'Você perdeu!';
+        return 'Perdeste!';
       }
     }
   </script>
