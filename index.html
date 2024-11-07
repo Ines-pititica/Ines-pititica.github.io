@@ -1057,7 +1057,7 @@ function resetGame() {
     <div id="input-word-container">
         <label for="input-word">Digita a palavra secreta:</label>
         <input type="text" id="input-word" placeholder="Digita a palavra" maxlength="10">
-        <button onclick="startGame()">Iniciar Jogo</button>
+        <button onclick="iniciarJogoForca()">Iniciar Jogo</button>
     </div>
 
     <!-- Segunda fase: Adivinhar a palavra -->
@@ -1082,7 +1082,7 @@ function resetGame() {
     let wrongGuesses = 0;
 
     // Função para iniciar o jogo
-    function startGame() {
+    function iniciarJogoForca() {
         const inputWord = document.getElementById('input-word').value.trim().toLowerCase();
 
         if (inputWord === '' || inputWord.length < 3) {
