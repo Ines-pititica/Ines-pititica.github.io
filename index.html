@@ -1237,10 +1237,11 @@ function resetGame() {
       }
     }
   </script>
+    <div id="quiz-container">
     <h2>Este ou Aquele?</h2>
     <div id="question">Pronto para começar?</div>
-    <button class="option-button" onclick="selectOption('op1')">Opção 1</button>
-    <button class="option-button" onclick="selectOption('op2')">Opção 2</button>
+    <button class="option-button" onclick="selectOption(0)">Opção 1</button>
+    <button class="option-button" onclick="selectOption(1)">Opção 2</button>
     <div id="timer">Tempo restante: <span id="time-left">10</span>s</div>
   </div>
 
@@ -1255,7 +1256,7 @@ function resetGame() {
 
     let currentQuestionIndex = 0;
     let timer;
-    let timeLeft = 10;
+    let timeLeft;
 
     function startQuiz() {
       loadQuestion();
@@ -1288,8 +1289,8 @@ function resetGame() {
     }
 
     function selectOption(selectedOption) {
-      clearInterval(timer);
-      nextQuestion();
+      clearInterval(timer); // Para o temporizador ao escolher uma opção
+      nextQuestion(); // Vai para a próxima pergunta
     }
 
     function nextQuestion() {
